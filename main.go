@@ -98,6 +98,7 @@ func getSPFRecord(domain string) (*SPFRecord, error) {
 
 	m.SetQuestion(dns.Fqdn(domain), dns.TypeTXT)
 	m.RecursionDesired = true
+	m.SetEdns0(4096, false)
 
 	r, _, err := c.Exchange(m, getDNSResolver())
 	if err != nil {
