@@ -21,11 +21,13 @@ func main() {
 		ip4List     stringSlice
 		ip6List     stringSlice
 		includeList stringSlice
+		tags        bool
 	)
 
 	flag.Var(&ip4List, "ip4", "IPv4 addresses to include (can be specified multiple times)")
 	flag.Var(&ip6List, "ip6", "IPv6 addresses to include (can be specified multiple times)")
 	flag.Var(&includeList, "include", "Domain names to include SPF records from (can be specified multiple times)")
+	flag.BoolVar(&tags, "tags", false, "Add ip4 or ip6 tag to each IP address")
 	flag.Parse()
 
 	if len(includeList) == 0 && len(ip4List) == 0 && len(ip6List) == 0 {
@@ -41,7 +43,15 @@ func main() {
 	}
 
 	for _, ip := range ips {
-		fmt.Println(ip)
+		if tags {
+			tag := "ip6"
+			if net.ParseIP(strings.Split(ip, "/")[0]).To4() != nil {
+				tag = "ip4"
+			}
+			fmt.Printf("%s:%s\n", tag, ip)
+		} else {
+			fmt.Println(ip)
+		}
 	}
 }
 
