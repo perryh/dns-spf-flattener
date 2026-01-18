@@ -25,13 +25,14 @@ dns-spf-flattener [options]
 - `-ip4 value` - IPv4 addresses to include (can be specified multiple times)
 - `-ip6 value` - IPv6 addresses to include (can be specified multiple times)
 - `-include value` - Domain names to include SPF records from (can be specified multiple times)
+- `-tags` - List IP addresses with `ip4` and `ip6` tags
 
 ### Examples
 
 Flatten SPF records from include domains:
 
 ```bash
-dns-spf-flattener -include gmail.com -include outlook.com
+dns-spf-flattener -include gmail.com -include example.com
 ```
 
 Combine manual IPs with include domains:
